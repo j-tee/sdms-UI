@@ -1,6 +1,10 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "types": ["nativewind/types", "@react-navigation/native",
+    "@react-navigation/native-stack", "@react-navigation/drawer"],
+    "moduleResolution": "bundler", // Modern module resolution
+    "skipLibCheck": true,          // Optional but helpful
     "strict": true,
     "paths": {
       "@/*": [
@@ -12,6 +16,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
   ]
 }

@@ -1,5 +1,15 @@
 {
   "expo": {
+    "router": {
+      "unstable_src": "./app",
+      "ignoreRouteFiles": [
+        "**/components/**",
+        "**/src/**",
+        "**/node_modules/**",
+        "**/.*",
+        "**/__tests__/**"
+      ]
+    },
     "name": "sdms",
     "slug": "sdms",
     "version": "1.0.0",
