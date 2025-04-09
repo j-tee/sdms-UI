@@ -9,11 +9,17 @@ export default function TabsLayout() {
       screenOptions={{
         tabBarActiveTintColor: 'blue',
         tabBarInactiveTintColor: 'gray',
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: 'white',
+          borderTopWidth: 0,
+          elevation: 0,
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'My Home',
           tabBarIcon: ({ color }: { color: string }) => (
             <MaterialIcons name="home" size={24} color={color} />
           ),

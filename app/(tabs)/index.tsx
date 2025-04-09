@@ -6,17 +6,17 @@ import MainNavigator from '@/src/components/navigation/MainNavigator';
 const HomeScreen = () => {
   return (
     <ScrollView className="flex-1 bg-white px-4">
-      {/* Header */}
+      {/* Header
       <View className="py-6 border-b border-gray-200">
         <Text className="text-3xl font-bold text-blue-800 text-center">
-          ALPHA LOGIQUE
+          ALPHA LOGIQUE SYSTEM
         </Text>
-      </View>
+      </View> */}
 
       {/* Navigation Links */}
-      <View className="flex-row flex-wrap justify-center gap-4 my-6">
+      {/* <View className="flex-row flex-wrap justify-center gap-4 my-6">         */}
        <MainNavigator />
-      </View>
+      {/* </View> */}
 
       {/* Content Section */}
       <View className="my-8">

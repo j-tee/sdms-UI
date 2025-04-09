@@ -1,86 +1,111 @@
-import { UserModel } from "../models/userModel";
+// src/utilities/userSession.ts
+import * as SecureStore from 'expo-secure-store';
+import { decode } from 'base-64';
+import { UserModel } from '../models/userModel';
 
-// import { showToastify } from './Toastify';
+global.atob = decode; // Polyfill for React Native
+
+const TOKEN_KEY = 'authToken';
+const USER_KEY = 'userData';
+const MOMO_KEY = 'momoToken';
+
 const UserSession = {
-  getroles: () => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      const decodedToken = decodeJWT(token);
-      return decodedToken?.roles || [];
-    }
-    return [];
-  },
-
-  getUserInfo: () => {
-    const token = sessionStorage.getItem('token');
-    const decodedToken = decodeJWT(token);
-    return {
-      userCategory: decodedToken?.user_category || 'Public',
-      username: decodedToken?.username || null,
-      email: decodedToken?.email || null,
-    };
-  },
-
-  isUserStaffOrOwner: (userId:number, users:UserModel[]) => {
-    return users.some(user => user.id === userId);
-  },
-  validMomoToken: () => {
-    const momotoken = JSON.parse(sessionStorage.getItem('momotoken') || '{}')
-
-    if (!isMomoTokenValid(momotoken)) {
-      return false;
-    }
-
+  // Get user roles from token
+  getRoles: async (): Promise<string[]> => {
     try {
-      const payload = decodeJWT(momotoken.access_token);
-      const expirationMinutes = payload?.exp || 0;
-      const currentTimeMinutes = Math.floor(Date.now() / 1000 / 60);
-
-      return expirationMinutes > currentTimeMinutes;
+      const token = await SecureStore.getItemAsync(TOKEN_KEY);
+      if (token) {
+        const decoded = decodeJWT(token);
+        return decoded?.roles || [];
+      }
+      return [];
     } catch (error) {
+      console.error('Error getting roles:', error);
+      return [];
+    }
+  },
+
+  // Get decoded user info
+  getUserInfo: async (): Promise<{
+    userCategory: string;
+    username?: string;
+    email?: string;
+  }> => {
+    try {
+      const token = await SecureStore.getItemAsync(TOKEN_KEY);
+      if (!token) return { userCategory: 'Public' };
+
+      const decoded = decodeJWT(token);
+      return {
+        userCategory: decoded?.user_category || 'Public',
+        username: decoded?.username,
+        email: decoded?.email,
+      };
+    } catch (error) {
+      console.error('Error getting user info:', error);
+      return { userCategory: 'Public' };
+    }
+  },
+
+  // Validate main auth token
+  validateToken: async (): Promise<boolean> => {
+    try {
+      const token = await SecureStore.getItemAsync(TOKEN_KEY);
+      if (!token) return false;
+
+      const decoded = decodeJWT(token);
+      const expirationTime = (decoded?.exp || 0) * 1000;
+      
+      if (expirationTime < Date.now()) {
+        await UserSession.clearSession();
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error('Token validation failed:', error);
       return false;
     }
   },
 
-  validateToken: () => {
-    const token = sessionStorage.getItem('token');
-    const decodedToken = decodeJWT(token);
-    const expirationTime = (decodedToken?.exp || 0) * 1000;
+  // Clear all session data
+  clearSession: async (): Promise<void> => {
+    try {
+      await Promise.all([
+        SecureStore.deleteItemAsync(TOKEN_KEY),
+        SecureStore.deleteItemAsync(USER_KEY),
+        SecureStore.deleteItemAsync(MOMO_KEY),
+      ]);
+    } catch (error) {
+      console.error('Error clearing session:', error);
+    }
+  },
 
-    if (expirationTime < Date.now()) {
-      handleExpiredToken();
+  // Momo token validation
+  validateMomoToken: async (): Promise<boolean> => {
+    try {
+      const momoToken = await SecureStore.getItemAsync(MOMO_KEY);
+      if (!momoToken) return false;
+
+      const decoded = decodeJWT(momoToken);
+      const expirationTime = (decoded?.exp || 0) * 1000;
+      return expirationTime > Date.now();
+    } catch (error) {
+      console.error('Momo token validation failed:', error);
       return false;
     }
-
-    return true;
   },
 };
 
-const decodeJWT = (jwt: any) => {
-  if (jwt) {
-    const base64Url = jwt.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    return JSON.parse(window.atob(base64)) || {};
-  }
-  return {};
-};
-
-const isMomoTokenValid = (momoToken: any) => {
-  return typeof momoToken === 'object' && momoToken.access_token && isJWTValid(momoToken.access_token);
-};
-
-const isJWTValid = (jwt: any) => {
+// Helper function to decode JWT
+const decodeJWT = (token: string): any => {
   try {
-    const payload = decodeJWT(jwt);
-    return typeof payload === 'object' && typeof payload.exp === 'number' && payload.exp > Date.now() / 1000 / 60;
+    const payload = token.split('.')[1];
+    const decodedPayload = decode(payload);
+    return JSON.parse(decodedPayload);
   } catch (error) {
-    return false;
+    console.error('JWT decoding failed:', error);
+    return null;
   }
-};
-
-const handleExpiredToken = () => {
-  sessionStorage.removeItem('user');
-  sessionStorage.removeItem('token');
 };
 
 export default UserSession;
