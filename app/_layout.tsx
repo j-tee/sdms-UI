@@ -30,7 +30,7 @@ const RootLayout = () => {
           }}
         />
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
           <Stack.Screen
             name="auth/login"
             options={{
