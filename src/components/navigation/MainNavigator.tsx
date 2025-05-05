@@ -99,113 +99,144 @@ const MainNavigator = () => {
         { path: "/auth/login", label: "LOGIN", icon: "login" },
       ];
 
-  return (
-    <View style={styles.container}>
-      {/* Header with logo, title, and menu button */}
-      <View style={styles.titleContainer}>
-        {/* <Text style={styles.subdomain}>sdm.alphalogiquetechnologies.com</Text>*/}
-      </View>
-      <View style={styles.header}>
-        <Image source={logo} style={styles.logo} />
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={styles.title}>ALPHA LOGIQUE</Text>
-          <Text style={styles.subdomain}>sdm.alphalogiquetechnologies.com</Text>
-        </View>
-        <TouchableOpacity
-          onPress={() => setShowMenu(!showMenu)}
-          style={styles.menuButton}
-        >
-          <MaterialIcons name="menu" size={28} color="#1a237e" />
-        </TouchableOpacity>
-      </View>
-
-      {/* Dropdown Menu */}
-      {showMenu && (
-        <View style={styles.dropdownMenu}>
-          {/* Main Menu Items */}
-          {menuItems.map((item) => (
-            <TouchableOpacity
-              key={item.path}
-              onPress={() => handleNavigation(item.path ?? "")}
-              style={styles.menuItem}
+      return (
+        <View style={styles.container}>
+          {/* Header with logo, title, and menu button */}
+          <View style={styles.header}>
+            <Image source={logo} style={styles.logo} />
+            <View style={styles.titleContainer}>
+              <Text style={styles.subdomain}>https://sdms.alphalogiquetechnologies.com</Text>
+              <Text style={styles.title}>ALPHA LOGIQUE</Text>
+            </View>
+            <TouchableOpacity 
+              onPress={() => setShowMenu(!showMenu)} 
+              style={styles.menuButton}
             >
-              <MaterialIcons name={item.icon} size={20} color="#1a237e" />
-              <Text style={styles.menuItemText}>{item.label}</Text>
+              <MaterialIcons 
+                name={showMenu ? "close" : "menu"} 
+                size={28} 
+                color="#1a237e" 
+              />
             </TouchableOpacity>
-          ))}
-
-          {/* Auth Items */}
-          {authItems.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() =>
-                "path" in item
-                  ? handleNavigation(item.path ?? "")
-                  : item.action?.()
-              }
-              style={styles.menuItem}
-            >
-              <MaterialIcons name={item.icon} size={20} color="#1a237e" />
-              <Text style={styles.menuItemText}>{item.label}</Text>
-            </TouchableOpacity>
-          ))}
+          </View>
+    
+          {/* Dropdown Menu - Now absolutely positioned */}
+          {showMenu && (
+            <View style={styles.dropdownMenuContainer}>
+              <View style={styles.dropdownMenu}>
+                {/* Main Menu Items */}
+                {menuItems.map((item) => (
+                  <TouchableOpacity
+                    key={item.path}
+                    onPress={() => handleNavigation(item.path)}
+                    style={styles.menuItem}
+                  >
+                    <MaterialIcons name={item.icon} size={20} color="#1a237e" />
+                    <Text style={styles.menuItemText}>{item.label}</Text>
+                  </TouchableOpacity>
+                ))}
+    
+                {/* Auth Items */}
+                {authItems.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => item.path ? handleNavigation(item.path) : item.action && item.action()}
+                    style={styles.menuItem}
+                  >
+                    <MaterialIcons name={item.icon} size={20} color="#1a237e" />
+                    <Text style={styles.menuItemText}>{item.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          )}
         </View>
-      )}
-    </View>
-  );
+      );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
+    borderBottomColor: '#e0e0e0',
+    zIndex: 1, // Ensure header stays above other content
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  logo: {
-    width: 40,
-    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    zIndex: 2, // Higher than dropdown
   },
   titleContainer: {
-    alignItems: "center",
     flex: 1,
-    marginLeft: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  subdomain: {
-    fontSize: 12,
-    color: "#666",
+  // ... (keep your other existing styles)
+  
+  // New dropdown container styles
+  dropdownMenuContainer: {
+    position: 'absolute',
+    top: 80, // Adjust based on your header height
+    right: 16,
+    left: 16,
+    zIndex: 1,
+    elevation: 5, // For Android shadow
+    shadowColor: '#000', // For iOS shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#1a237e",
+  dropdownMenu: {
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  logo: {
+    width: 50, // Adjust the width as needed
+    height: 50, // Adjust the height as needed
+    resizeMode: 'contain', // Ensures the image scales properly
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  menuItemText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: '#1a237e',
   },
   menuButton: {
     padding: 8,
+    borderRadius: 4,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2, // For Android shadow
+    shadowColor: '#000', // For iOS shadow
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
-  dropdownMenu: {
-    marginTop: 10,
-    backgroundColor: "#f8f8f8",
-    borderRadius: 8,
-    padding: 8,
-    elevation: 3,
+  subdomain: {
+    fontSize: 12,
+    color: '#757575',
+    textAlign: 'center',
   },
-  menuItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1a237e',
+    textAlign: 'center',
   },
-  menuItemText: {
-    fontSize: 16,
-    color: "#1a237e",
-    marginLeft: 12,
-  },
+  // ... (rest of your styles)
 });
+
 
 export default MainNavigator;

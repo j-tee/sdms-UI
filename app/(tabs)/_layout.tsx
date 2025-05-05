@@ -34,6 +34,24 @@ export default function TabsLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="finance"
+        options={{
+          title: 'Finance',
+          tabBarIcon: ({ color }: { color: string }) => (
+            <MaterialIcons name="money" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="academics"
+        options={{
+          title: 'Academics',
+          tabBarIcon: ({ color }: { color: string }) => (
+            <MaterialIcons name="book" size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

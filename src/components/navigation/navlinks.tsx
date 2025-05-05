@@ -14,7 +14,7 @@ const navlinks = ({ items }: NavLinksProps) => {
       {items.map(({ label, route }) => (
         <Link
           key={label}
-          href={route}
+          href={route as any}
           className="px-4 py-2 border border-blue-800 rounded-full"
         >
           <Text className="text-blue-800 text-sm">{label}</Text>

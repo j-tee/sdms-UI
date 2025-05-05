@@ -32,7 +32,7 @@ const RootLayout = () => {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
-            name="login"
+            name="auth/login"
             options={{
               title: "Login",
               headerLeft: () => (
@@ -43,7 +43,7 @@ const RootLayout = () => {
             }}
           />
           <Stack.Screen
-            name="register"
+            name="auth/register"
             options={{
               title: "Sign Up",
               presentation: "modal",

@@ -6,7 +6,7 @@ const LoginScreen = () => {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text>Register Screen</Text>
-          <Link href="/login">Back to Login</Link>
+          <Link href="/auth/login">Back to Login</Link>
         </View>
       );
 }
