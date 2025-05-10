@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SchoolState } from '../../models/school';
 import SchoolService from '../../services/schoolService';
-import { Branch } from '../../models/branch';
+import { SchoolState } from '@/src/models/school';
+import { Branch } from '@/src/models/branch';
 
 
 const initialState: SchoolState = {

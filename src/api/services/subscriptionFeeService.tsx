@@ -10,11 +10,11 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const SubscriptionFeeService = {
-  getSubscriptionFees: () => axios.get(`${API_URL}api/v1/subscription_fees`, { headers: authHeader() }),
-  addSubscriptionFee: (subscriptionFee: SubscriptionFee) => axios.post(`${API_URL}api/v1/subscription_fees`, subscriptionFee, { headers: authHeader() }),
-  deleteSubscriptionFee: (subscriptionFee: SubscriptionFee) => axios.delete(`${API_URL}api/v1/subscription_fees/${subscriptionFee.id}`, { headers: authHeader() }),
-  updateSubscriptionFee: (subscriptionFee: SubscriptionFee, id: number) => axios.put(`${API_URL}api/v1/subscription_fees/${id}`, subscriptionFee, { headers: authHeader() }),
-  getSubscriptionFee: (id: number) => axios.get(`${API_URL}api/v1/subscription_fees/${id}`, { headers: authHeader() }),
+  getSubscriptionFees: async () => axios.get(`${API_URL}api/v1/subscription_fees`, { headers: await authHeader() }),
+  addSubscriptionFee: async (subscriptionFee: SubscriptionFee) => axios.post(`${API_URL}api/v1/subscription_fees`, subscriptionFee, { headers: await authHeader() }),
+  deleteSubscriptionFee: async (subscriptionFee: SubscriptionFee) => axios.delete(`${API_URL}api/v1/subscription_fees/${subscriptionFee.id}`, { headers: await authHeader() }),
+  updateSubscriptionFee: async (subscriptionFee: SubscriptionFee, id: number) => axios.put(`${API_URL}api/v1/subscription_fees/${id}`, subscriptionFee, { headers: await authHeader() }),
+  getSubscriptionFee: async (id: number) => axios.get(`${API_URL}api/v1/subscription_fees/${id}`, { headers: await authHeader() }),
 };
 export default SubscriptionFeeService;
 

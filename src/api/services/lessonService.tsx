@@ -11,27 +11,15 @@ const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const LessonService = {
   getLessons: (params: LessonParams) => 
-    axios.get(`${API_URL}api/v1/lessons?${queryStringFormatter(params)}`, { headers: authHeader() }),
-    // const queryParams = `branch_id=${params.branch_id}`+
-    // `&department_id=${params.department_id}`+
-    // `&branch_id=${params.branch_id}`+
-    // `&program_id=${params.program_id}`+
-    // `&staff_id=${params.staff_id}`+
-    // `&class_group_id=${params.class_group_id}`+
-    // `&program_subject_id=${params.program_subject_id}`+
-    // `&academic_term_id=${params.academic_term_id}`+
-    // `&day_of_week=${params.day_of_week}`+
-    // `&stage_id=${params.stage_id}`+
-    // `&current_page=${params.pagination?.current_page}`+
-    // `&per_page=${params.pagination?.per_page}`+
-    // `&paginate=${params.paginate} `
-    //  return 
-    // },
-  getStudentLessons: (params: any) => axios.get(`${API_URL}api/v1/lessons?${queryStringFormatter(params)}`, { headers: authHeader() }), 
-  addLesson: (lesson: Lesson) => axios.post(`${API_URL}api/v1/lessons`, lesson, { headers: authHeader() }),
-  deleteLesson: (lesson: LessonViewModel) => axios.delete(`${API_URL}api/v1/lessons/${lesson.id}`, { headers: authHeader() }),
-  updateLesson: (lesson: Lesson, id: number) => axios.put(`${API_URL}api/v1/lessons/${id}`, lesson, { headers: authHeader() }),
-  getLesson: (id: number) => axios.get(`${API_URL}api/v1/lessons/${id}`, { headers: authHeader() }),
+    authHeader().then(headers => 
+      axios.get(`${API_URL}api/v1/lessons?${queryStringFormatter(params)}`, { headers })
+    ),
+   
+  getStudentLessons: async (params: any) => axios.get(`${API_URL}api/v1/lessons?${queryStringFormatter(params)}`, { headers: await authHeader() }), 
+  addLesson: async (lesson: Lesson) => axios.post(`${API_URL}api/v1/lessons`, lesson, { headers: await authHeader() }),
+  deleteLesson: async (lesson: LessonViewModel) => axios.delete(`${API_URL}api/v1/lessons/${lesson.id}`, { headers: await authHeader() }),
+  updateLesson: async (lesson: Lesson, id: number) => axios.put(`${API_URL}api/v1/lessons/${id}`, lesson, { headers: await authHeader() }),
+  getLesson: async (id: number) => axios.get(`${API_URL}api/v1/lessons/${id}`, { headers: await authHeader() }),
 };
 export default LessonService;
 

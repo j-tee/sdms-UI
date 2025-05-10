@@ -1,28 +1,36 @@
-import { RoleModel } from '@/src/models/authModel';
-import { UserModel } from '@/src/models/userModel';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import AuthService from '../../services/authService';
+import {
+  loginUserInfo,
+  RegisterUserModel,
+  ResetPasswdUserData,
+  RoleModel,
+  UserRole,
+} from "@/src/models/authModel";
+import { UserModel } from "@/src/models/userModel";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import AuthService from "../../services/authService";
+import RoleService from "../../services/roleService";
+// import authService from '../../services/authService';
 // import { RegisterUserModel, ResetPasswdUserData, UserRole, loginUserInfo, RoleModel } from '../../models/authModel';
 // import { UserModel } from '../../models/userModel';
 // import RoleService from '../../services/roleService';
 
 const initialState = {
-  status: '',
+  status: "",
   response: {},
   momotoken: {},
   isSuccessful: false,
   isLoggedIn: false,
   isLoading: false,
   user: {} as UserModel,
-  message: '',
+  message: "",
   roles: [] as string[],
   user_roles: [] as string[],
   role: {},
-  assigned_roles: [] as RoleModel[]
+  assigned_roles: [] as RoleModel[],
 };
 
 export const resetMessage = createAsyncThunk(
-  'auth/resetMessage',
+  "auth/resetMessage",
   async (_, thunkAPI) => {
     try {
       const response = await AuthService.resetMessage();
@@ -30,11 +38,11 @@ export const resetMessage = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
-  },
+  }
 );
 
 export const getCurrentUser = createAsyncThunk(
-  'auth/getCurrentUser',
+  "auth/getCurrentUser",
   async (_, thunkAPI) => {
     try {
       // API call to register user
@@ -43,167 +51,174 @@ export const getCurrentUser = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
-  },
+  }
 );
 
 export const registerUser = createAsyncThunk(
-  'auth/registerUser',
+  "auth/registerUser",
   async (userData: RegisterUserModel, thunkAPI) => {
     try {
       // API call to register user
       const response = await AuthService.register(userData);
-      return response.data;
+      return response;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
-  },
+  }
 );
 
 export const logoutUser = createAsyncThunk(
-  'auth/logoutUser',
-  async (_, thunkAPI) => {
+  "auth/logoutUser",
+  async (user:UserModel, thunkAPI) => {
     try {
-      const response = await AuthService.logout();
-      return response.data;
+      const response = await AuthService.logout(user);
+      return response;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
-  },
+  }
 );
 
 export const loginUser = createAsyncThunk(
-  'auth/loginUser',
+  "auth/loginUser",
   async (userData: loginUserInfo, thunkAPI) => {
     try {
-      const response = await AuthService.login(userData.email, userData.password);
+      const response = await AuthService.login(
+        userData.email,
+        userData.password
+      );
+      // console.log("auth/loginUser====>:", response);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error);
     }
-  },
+  }
 );
 
 export const requestPasswordReset = createAsyncThunk(
-  'auth/requestPasswordReset',
+  "auth/requestPasswordReset",
   async (email: string, thunkAPI) => {
     try {
       const response = await AuthService.requestPasswordReset(email);
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
+  }
 );
 
 export const resetPassword = createAsyncThunk(
-  'auth/resetPassword',
+  "auth/resetPassword",
   async (pwd: ResetPasswdUserData, thunkAPI) => {
     try {
       const response = await AuthService.resetPassword(pwd);
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
+  }
 );
 
 export const getUserByEmail = createAsyncThunk(
-  'auth/getUserByEmail',
+  "auth/getUserByEmail",
   async (email: string, thunkAPI) => {
     try {
       const response = await AuthService.getUserByEmail(email);
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
+  }
 );
 
 export const getRoles = createAsyncThunk(
-  'auth/getRoles',
+  "auth/getRoles",
   async (_, thunkAPI) => {
     try {
       const response = await AuthService.getRoles();
-      return response.data;
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-  },
+  }
 );
 export const getCurrentUserRoles = createAsyncThunk(
-  'auth/getCurrentUserRoles',
+  "auth/getCurrentUserRoles",
   async (_, thunkAPI) => {
     try {
       const response = await AuthService.getCurrentUserRoles();
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
+  }
 );
 
 export const getUserRoles = createAsyncThunk(
-  'auth/getUserRoles',
+  "auth/getUserRoles",
   async (user_id: number, thunkAPI) => {
     try {
       const response = await AuthService.getUserRoles(user_id);
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
+  }
 );
 
 export const addUserToRole = createAsyncThunk(
-  'auth/addUserToRole',
+  "auth/addUserToRole",
   async (userRole: UserRole, thunkAPI) => {
     try {
       const response = await AuthService.addUserToRole(userRole);
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
+  }
 );
 
 export const removeRole = createAsyncThunk(
-  'auth/removeRole',
+  "auth/removeRole",
   async (userRole: UserRole, thunkAPI) => {
     try {
-      const response = await AuthService.removeRole(userRole.user_id, userRole.role_id);
-      return response.data;
+      const response = await AuthService.removeRole(
+        userRole.user_id,
+        userRole.role_id
+      );
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
+  }
 );
 
 export const verifyCapture = createAsyncThunk(
-  'auth/verifyCapture',
+  "auth/verifyCapture",
   async (params: any, thunkAPI) => {
     try {
       const response = await AuthService.verifyCaptcha(params);
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
-)
+  }
+);
 
 export const getAssignedRoles = createAsyncThunk(
-  'auth/getAssignedRoles',
+  "auth/getAssignedRoles",
   async (params: any, thunkAPI) => {
     try {
       const response = await AuthService.getAssignedRoles(params);
-      return response.data;
+      return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response);
     }
-  },
-)
+  }
+);
 
 export const removeUserFromRole = createAsyncThunk(
-  'auth/removeUserFromRole',
+  "auth/removeUserFromRole",
   async (params: any, thunkAPI) => {
     try {
       const response = await RoleService.removeUserFromRole(params);
@@ -211,11 +226,11 @@ export const removeUserFromRole = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
-  },
-)
+  }
+);
 
 export const sendAccountConfirmationLink = createAsyncThunk(
-  'auth/sendAccountConfirmationLink',
+  "auth/sendAccountConfirmationLink",
   async (email: string, thunkAPI) => {
     try {
       const response = await AuthService.sendAccountConfirmationLink(email);
@@ -223,11 +238,11 @@ export const sendAccountConfirmationLink = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
-  },
-)
+  }
+);
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -255,56 +270,71 @@ export const authSlice = createSlice({
         status: action.payload.status,
         isLoading: false,
       }))
-      .addCase(sendAccountConfirmationLink.rejected, (state, action: PayloadAction<any>) => ({
-        ...state,
-        message: action.payload.message,
-        status: action.payload.status,
-        isLoading: false,
-      }))
+      .addCase(
+        sendAccountConfirmationLink.rejected,
+        (state, action: PayloadAction<any>) => ({
+          ...state,
+          message: action.payload.message,
+          status: action.payload.status,
+          isLoading: false,
+        })
+      )
       .addCase(sendAccountConfirmationLink.pending, (state, action) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
       }))
       .addCase(removeUserFromRole.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has completed',
+        message: "The action requested has completed",
         isLoading: false,
       }))
       .addCase(removeUserFromRole.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(removeUserFromRole.pending, (state, action) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
-      })) 
-      .addCase(getAssignedRoles.fulfilled, (state, action) => ({
-        ...state,
-        assigned_roles: action.payload.roles,
-        status: action.payload.status,
-        isLoading: false,
       }))
-      .addCase(getAssignedRoles.rejected, (state, action:PayloadAction<any>) => ({
-        ...state,
-        assigned_roles: [],
-        message: action.payload.message,
-        status: action.payload.status,
-        isLoading: false,
-      }))
+      .addCase(
+        getAssignedRoles.fulfilled.type,
+        (
+          state,
+          action: PayloadAction<{ roles: RoleModel[]; status: string }>
+        ) => ({
+          ...state,
+          assigned_roles: action.payload.roles,
+          status: action.payload.status,
+          isLoading: false,
+        })
+      )
+      .addCase(
+        getAssignedRoles.rejected,
+        (state, action: PayloadAction<any>) => ({
+          ...state,
+          assigned_roles: [],
+          message: action.payload.message,
+          status: action.payload.status,
+          isLoading: false,
+        })
+      )
       .addCase(getAssignedRoles.pending, (state, action) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
       }))
-      .addCase(verifyCapture.fulfilled, (state, action) => ({
-        ...state,
-        response : action.payload.data,
-        status: action.payload.status,
-        isLoading: false,
-      }))
+      .addCase(
+        verifyCapture.fulfilled,
+        (state, action: PayloadAction<{ data: any; status: number }>) => ({
+          ...state,
+          response: action.payload.data,
+          status: action.payload.status.toString(), // Convert status to string
+          isLoading: false,
+        })
+      )
       .addCase(verifyCapture.rejected, (state, action: PayloadAction<any>) => ({
         ...state,
         message: action.payload.message,
@@ -313,213 +343,213 @@ export const authSlice = createSlice({
       }))
       .addCase(verifyCapture.pending, (state, action) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
       }))
       .addCase(removeRole.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has completed',
+        message: "The action requested has completed",
         isLoading: false,
       }))
       .addCase(removeRole.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(removeRole.pending, (state, action) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
 
         isLoading: true,
       }))
       .addCase(addUserToRole.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has completed',
+        message: "The action requested has completed",
         isLoading: false,
       }))
       .addCase(addUserToRole.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(addUserToRole.pending, (state, action) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
       }))
       .addCase(getRoles.fulfilled, (state, action) => ({
         ...state,
-        roles: action.payload.roles,
-        message: 'The action requested has completed',
+        roles: action.payload.data.roles,
+        message: "The action requested has completed",
         isLoading: false,
       }))
       .addCase(getRoles.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getRoles.pending, (state, action) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
       }))
       .addCase(getUserRoles.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
 
         isLoading: false,
       }))
       .addCase(getUserRoles.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getUserRoles.pending, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getCurrentUserRoles.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getCurrentUserRoles.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getCurrentUserRoles.pending, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getUserByEmail.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getUserByEmail.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(getUserByEmail.pending, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(resetPassword.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(resetPassword.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(resetPassword.pending, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(requestPasswordReset.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(requestPasswordReset.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(requestPasswordReset.pending, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(resetMessage.fulfilled, (state) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(resetMessage.rejected, (state) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(resetMessage.pending, (state) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
       }))
       .addCase(logoutUser.fulfilled, (state, action) => ({
         ...state,
-        message: 'The action requested has completed',
+        message: "The action requested has completed",
         isLoading: false,
       }))
       .addCase(logoutUser.rejected, (state) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(logoutUser.pending, (state) => ({
         ...state,
-        message: 'The action requested is pending',
+        message: "The action requested is pending",
         isLoading: true,
       }))
       .addCase(registerUser.fulfilled, (state) => ({
         ...state,
-        message: 'The action requested has completed',
+        message: "The action requested has completed",
         isLoading: false,
       }))
       .addCase(registerUser.rejected, (state, action) => ({
         ...state,
-        message: 'The action requested has failed',
+        message: "The action requested has failed",
         isLoading: false,
       }))
       .addCase(registerUser.pending, (state, action) => ({
         ...state,
-        isLoggedIn: true,
-      
-        message: 'Loading...',
-        isLoading: false,
+        isLoggedIn: false,
+        message: "Loading...",
+        isLoading: true,
       }))
-      .addCase(loginUser.rejected, (state) => ({
+      .addCase(loginUser.rejected, (state, action: PayloadAction<any>) => ({
         ...state,
-        // isLoggedIn: false,
-        message: 'Login failure!!',
+        isLoggedIn: false,
+        message: action.payload ? action.payload.message : "Login failed",
         isLoading: false,
       }))
       .addCase(loginUser.pending, (state) => ({
         ...state,
-        // message: 'Login failure!!',
+        isLoggedIn: false,
+        message: "Loading...",
         isLoading: true,
       }))
       .addCase(loginUser.fulfilled, (state, action) => ({
         ...state,
         isLoggedIn: true,
-        user: action.payload.user,
-        message: 'User logged in successfully',
+        user: action.payload.data.user,
+        message: "User logged in successfully",
         isLoading: false,
       }))
       .addCase(getCurrentUser.fulfilled, (state, action) => ({
         ...state,
         isLoggedIn: true,
         user: action.payload,
-        message: 'User Profile Retrieved Successfully',
+        message: "User Profile Retrieved Successfully",
       }))
       .addCase(getCurrentUser.rejected, (state) => ({
         ...state,
-        message: 'Failed to retriev user profile',
+        message: "Failed to retriev user profile",
         isLoading: true,
       }))
       .addCase(getCurrentUser.pending, (state) => ({
         ...state,
         isLoggedIn: false,
         isLoading: true,
-        message: 'User Profile Retrieval pending',
+        message: "User Profile Retrieval pending",
         isSuccessful: false,
       }));
   },

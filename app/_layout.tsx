@@ -10,26 +10,14 @@ import { store } from "@/src/api/redux/store";
 import MainNavigator from "@/src/components/navigation/MainNavigator";
 import { AuthProvider } from "@/src/utilities/AuthContext";
 import Toast from "react-native-toast-message";
+import { useEffect } from "react";
 
 const RootLayout = () => {
+ 
   return (
-    <Provider store={store}>
-      <AuthProvider>
-        <Toast
-          config={{
-            success: ({ text1 }) => (
-              <View style={{ padding: 15, backgroundColor: "green" }}>
-                <Text style={{ color: "white" }}>{text1}</Text>
-              </View>
-            ),
-            error: ({ text1 }) => (
-              <View style={{ padding: 15, backgroundColor: "red" }}>
-                <Text style={{ color: "white" }}>{text1}</Text>
-              </View>
-            ),
-          }}
-        />
-        <Stack>
+    <Provider store={store}>       
+      <AuthProvider>         
+         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
             name="auth/login"
@@ -49,8 +37,9 @@ const RootLayout = () => {
               presentation: "modal",
             }}
           />
-        </Stack>
+        </Stack>       
       </AuthProvider>
+      <Toast />
     </Provider>
   );
 };

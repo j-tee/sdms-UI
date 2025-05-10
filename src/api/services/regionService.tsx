@@ -10,11 +10,26 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const RegionService = {
-    getRegions: (params: any) => axios.get(`${API_URL}api/v1/regions?${queryStringFormatter(params)}`, { headers: authHeader() }),
-    addRegion: (region: any) => axios.post(`${API_URL}api/v1/regions`, region, { headers: authHeader() }),
-    deleteRegion: (region: Region) => axios.delete(`${API_URL}api/v1/regions/${region.id}`, { headers: authHeader() }),
-    updateRegion: (region: any) => axios.put(`${API_URL}api/v1/regions/${region.id}`, region, { headers: authHeader() }),
-    getRegion: (region: Region) => axios.get(`${API_URL}api/v1/regions/${region.id}`, { headers: authHeader() }),
+    getRegions: async (params: any) => {
+        const headers = await authHeader();
+        return axios.get(`${API_URL}api/v1/regions?${queryStringFormatter(params)}`, { headers });
+    },
+    addRegion: async (region: any) => {
+        const headers = await authHeader();
+        return axios.post(`${API_URL}api/v1/regions`, region, { headers });
+    },
+    deleteRegion: async (region: Region) => {
+        const headers = await authHeader();
+        return axios.delete(`${API_URL}api/v1/regions/${region.id}`, { headers });
+    },
+    updateRegion: async (region: any) => {
+        const headers = await authHeader();
+        return axios.put(`${API_URL}api/v1/regions/${region.id}`, region, { headers });
+    },
+    getRegion: async (region: Region) => {
+        const headers = await authHeader();
+        return axios.get(`${API_URL}api/v1/regions/${region.id}`, { headers });
+    },
 };
 
 export default RegionService;

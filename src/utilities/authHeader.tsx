@@ -1,13 +1,17 @@
-export default function authHeader(): Record<string, string> {
-  const token = sessionStorage.getItem('token');
-  const headers: Record<string, string> = { 'Content-Type': 'application/x-www-form-urlencoded' };
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-  if (token) {
-    try {
-      headers.Authorization = `Bearer ${JSON.parse(token)}`;
-    } catch (error) {
-      console.error('Invalid token in sessionStorage:', error);
+export default async function authHeader(): Promise<Record<string, string>> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+
+  try {
+    const token = await AsyncStorage.getItem('token');
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
     }
+  } catch (error) {
+    console.error('Error reading token from AsyncStorage:', error);
   }
 
   return headers;

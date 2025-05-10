@@ -1,11 +1,13 @@
 // src/utilities/userSession.ts
-import * as SecureStore from 'expo-secure-store';
+// import * as SecureStore from 'expo-secure-store';
 import { decode } from 'base-64';
+// import { UserModel } from '../models/userModel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserModel } from '../models/userModel';
 
 global.atob = decode; // Polyfill for React Native
 
-const TOKEN_KEY = 'authToken';
+const TOKEN_KEY = 'token';
 const USER_KEY = 'userData';
 const MOMO_KEY = 'momoToken';
 
@@ -13,7 +15,8 @@ const UserSession = {
   // Get user roles from token
   getRoles: async (): Promise<string[]> => {
     try {
-      const token = await SecureStore.getItemAsync(TOKEN_KEY);
+      const token = await AsyncStorage.getItem(TOKEN_KEY);
+      // console.log('Token====>:', token);
       if (token) {
         const decoded = decodeJWT(token);
         return decoded?.roles || [];
@@ -32,7 +35,7 @@ const UserSession = {
     email?: string;
   }> => {
     try {
-      const token = await SecureStore.getItemAsync(TOKEN_KEY);
+      const token = await AsyncStorage.getItem(TOKEN_KEY);
       if (!token) return { userCategory: 'Public' };
 
       const decoded = decodeJWT(token);
@@ -50,7 +53,7 @@ const UserSession = {
   // Validate main auth token
   validateToken: async (): Promise<boolean> => {
     try {
-      const token = await SecureStore.getItemAsync(TOKEN_KEY);
+      const token = await AsyncStorage.getItem(TOKEN_KEY);
       if (!token) return false;
 
       const decoded = decodeJWT(token);
@@ -71,19 +74,23 @@ const UserSession = {
   clearSession: async (): Promise<void> => {
     try {
       await Promise.all([
-        SecureStore.deleteItemAsync(TOKEN_KEY),
-        SecureStore.deleteItemAsync(USER_KEY),
-        SecureStore.deleteItemAsync(MOMO_KEY),
+        AsyncStorage.removeItem(TOKEN_KEY),
+        AsyncStorage.removeItem(USER_KEY),
+        AsyncStorage.removeItem(MOMO_KEY),
       ]);
     } catch (error) {
       console.error('Error clearing session:', error);
     }
   },
-
+  isUserStaffOrOwner: (userId:number, users:UserModel[]) => {
+    console.log('User ID:', userId);
+    console.log('Users:', users);
+    return users.some(user => user.id === userId);
+  },
   // Momo token validation
   validateMomoToken: async (): Promise<boolean> => {
     try {
-      const momoToken = await SecureStore.getItemAsync(MOMO_KEY);
+      const momoToken = await AsyncStorage.getItem(MOMO_KEY);
       if (!momoToken) return false;
 
       const decoded = decodeJWT(momoToken);

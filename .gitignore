@@ -36,3 +36,24 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+.env.development
+.env.test
+.env.production
+*.log
+*.swp
+*.swo
+*.swn

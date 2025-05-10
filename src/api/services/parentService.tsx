@@ -13,14 +13,22 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const ParentService = {
-  getMyWards: (params: QueryParams) => 
-  axios.get(`${API_URL}api/v1/parents/subscriptions/students/my_wards?${queryStringFormatter(params)}`, { headers: authHeader() }),
-  getParentByEmail:(email:string) => axios.get(`${API_URL}api/v1/parents/email/get_parent_by_email?email_address=${email}`, { headers: authHeader() }),
-  getParents: (params: ParentParams) => axios.get(`${API_URL}api/v1/parents?${queryStringFormatter(params)}`, { headers: authHeader() }),
-  addParent: (parent: Parent) => axios.post(`${API_URL}api/v1/parents`, parent, { headers: authHeader() }),
-  deleteParent: (parent: Parent, id:number) => axios.delete(`${API_URL}api/v1/parents/${id}`, { headers: authHeader() }),
-  updateParent: (parent: Parent, id:number) => axios.put(`${API_URL}api/v1/parents/${id}`, parent, { headers: authHeader() }),
-  getParent: (parentId: number) => axios.get(`${API_URL}api/v1/parents/${parentId}`, { headers: authHeader() }),
+  getMyWards: async (params: QueryParams) => {
+    const headers = await authHeader();
+    return axios.get(`${API_URL}api/v1/parents/subscriptions/students/my_wards?${queryStringFormatter(params)}`, { headers });
+  },
+  getParentByEmail: async (email: string) => {
+    const headers = await authHeader();
+    return axios.get(`${API_URL}api/v1/parents/email/get_parent_by_email?email_address=${email}`, { headers });
+  },
+  getParents: async (params: ParentParams) => axios.get(`${API_URL}api/v1/parents?${queryStringFormatter(params)}`, { headers: await authHeader() }),
+  addParent: async (parent: Parent) => axios.post(`${API_URL}api/v1/parents`, parent, { headers: await authHeader() }),
+  deleteParent: async (parent: Parent, id:number) => axios.delete(`${API_URL}api/v1/parents/${id}`, { headers: await authHeader() }),
+  updateParent: async (parent: Parent, id:number) => axios.put(`${API_URL}api/v1/parents/${id}`, parent, { headers: await authHeader() }),
+  getParent: async (parentId: number) => {
+    const headers = await authHeader();
+    return axios.get(`${API_URL}api/v1/parents/${parentId}`, { headers });
+  },
 };
 
 export default ParentService;

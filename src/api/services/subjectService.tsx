@@ -11,14 +11,14 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const SubjectService = {
-  getSubjects: (params: SubjectParams) => axios.get(`${API_URL}api/v1/subjects?${queryStringFormatter(params)}`, { headers: authHeader() }),
-  addSubject: (subject: Subject) => axios.post(`${API_URL}api/v1/subjects`, subject, { headers: authHeader() }),
-  deleteSubject: (subjectId: number) => axios.delete(`${API_URL}api/v1/subjects/${subjectId}`, { headers: authHeader() }),
-  updateSubject: (subject: Subject, id: number|undefined) => axios.put(`${API_URL}api/v1/subjects/${id}`, subject, { headers: authHeader() }),
-  getSubject: (id: number) => axios.get(`${API_URL}api/v1/subjects/${id}`, { headers: authHeader() }),
-  getSubjectListFromTimeTable: (params: any) => axios.get(`${API_URL}api/v1/subjects/program_subjects/lessons/subject_list_from_time_table?${queryStringFormatter(params)}`, { headers: authHeader() }),  
-  getClassSubjectList: (params: any) => axios.get(`${API_URL}api/v1/schools/class_groups/subjects/class_subject_list?${queryStringFormatter(params)}`, { headers: authHeader() }),  
-  getStaffSubjectList:(params: any) => axios.get(`${API_URL}api/v1/subjects/program_subjects/lessons/staff_subject_list?${queryStringFormatter(params)}`, { headers: authHeader() }),  
+  getSubjects: async (params: SubjectParams) => axios.get(`${API_URL}api/v1/subjects?${queryStringFormatter(params)}`, { headers: await authHeader() }),
+  addSubject: async (subject: Subject) => axios.post(`${API_URL}api/v1/subjects`, subject, { headers: await authHeader() }),
+  deleteSubject: async (subjectId: number) => axios.delete(`${API_URL}api/v1/subjects/${subjectId}`, { headers: await authHeader() }),
+  updateSubject: async (subject: Subject, id: number|undefined) => axios.put(`${API_URL}api/v1/subjects/${id}`, subject, { headers: await authHeader() }),
+  getSubject: async (id: number) => axios.get(`${API_URL}api/v1/subjects/${id}`, { headers: await authHeader() }),
+  getSubjectListFromTimeTable: async (params: any) => axios.get(`${API_URL}api/v1/subjects/program_subjects/lessons/subject_list_from_time_table?${queryStringFormatter(params)}`, { headers: await authHeader() }),  
+  getClassSubjectList: async (params: any) => axios.get(`${API_URL}api/v1/schools/class_groups/subjects/class_subject_list?${queryStringFormatter(params)}`, { headers: await authHeader() }),  
+  getStaffSubjectList: async (params: any) => axios.get(`${API_URL}api/v1/subjects/program_subjects/lessons/staff_subject_list?${queryStringFormatter(params)}`, { headers: await authHeader() }),  
 };
 export default SubjectService;
 

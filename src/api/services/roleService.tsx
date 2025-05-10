@@ -9,9 +9,15 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const RoleService = {
-    getRoles: (params: any) => axios.get(`${API_URL}api/v1/roles/index?${queryStringFormatter(params)}`, { headers: authHeader(), params }),
-    addUserToRole: (params: any) => axios.post(`${API_URL}api/v1/roles/schools/new_role/add_user_to_role?`,params, { headers: authHeader() }),
-    removeUserFromRole: (params: any) => axios.get(`${API_URL}api/v1/roles/schools/new_role/remove_user_from_role?${queryStringFormatter(params)}`, { headers: authHeader(), params }), 
+    getRoles: async (params: any) => {
+        const headers = await authHeader();
+        return axios.get(`${API_URL}api/v1/roles/index?${queryStringFormatter(params)}`, { headers, params });
+    },
+    addUserToRole: async (params: any) => {
+        const headers = await authHeader();
+        return axios.post(`${API_URL}api/v1/roles/schools/new_role/add_user_to_role?`, params, { headers });
+    },
+    removeUserFromRole: async (params: any) => axios.get(`${API_URL}api/v1/roles/schools/new_role/remove_user_from_role?${queryStringFormatter(params)}`, { headers: await authHeader(), params }), 
 };
 export default RoleService;
 

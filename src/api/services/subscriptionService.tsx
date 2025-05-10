@@ -4,34 +4,31 @@ import { Subscription, SubscriptionViewModel } from '@/src/models/subscription';
 import authHeader from '@/src/utilities/authHeader';
 import queryStringFormatter from '@/src/utilities/queryStringFormatter';
 import axios from 'axios';
-// import authHeader from '../utility/authHeader';
-// import { QueryParams } from '../models/queryParams';
-// import queryStringFormatter from '../utility/queryStringFormatter';
-// import { Subscription, SubscriptionViewModel } from '../models/subscription';
 
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const SubscriptionService = {
-  getMakePayment: (params: any) => {
+  getMakePayment: async (params: any) => {
+    const token = params.token.access_token;
     const headers = {
-      ...authHeader(),
-      'token': params.token.access_token,
+      ...await authHeader(),
+      'token': token,
     };
 
     return axios.post(`${API_URL}api/v1/subscriptions/payments/student/keys/momo_api_key/momo_token/request_to_pay`, params, {
       headers: headers,
     });
   },
-  initializeTransaction: (params: any) => axios.post(`${API_URL}api/v1/parents/subscriptions/initialize_transaction`, params, { headers: authHeader()}),  // eslint-disable-line max-len 
-  getMomoToken: () => axios.get(`${API_URL}api/v1/subscriptions/payments/student/keys/momo_api_key/momo_token`, {headers: authHeader()}),
-  requestToPay: (params: any) => axios.post(`${API_URL}api/v1/subscriptions/payments/student/keys/momo_api_key/momo_token/request_to_pay`, params, {headers: {...authHeader(), token:sessionStorage.getItem('momo_token')}}),  // eslint-disable-line max-len  
-  getMomoApiKey: () => axios.get(`${API_URL}api/v1/subscriptions/payments/student/keys/momo_api_key`, { headers: authHeader() }),
-  getSubscriptions: (params: QueryParams) => axios.get(`${API_URL}api/v1/subscriptions?${queryStringFormatter(params)}`, { headers: authHeader() }),
-  addSubscription: (subscription: Subscription) => axios.post(`${API_URL}api/v1/subscriptions`, subscription, { headers: authHeader() }),
-  deleteSubscription: (subscription: SubscriptionViewModel) => axios.delete(`${API_URL}api/v1/subscriptions/${subscription.id}`, { headers: authHeader() }),
-  updateSubscription: (subscription: Subscription, id: number) => axios.put(`${API_URL}api/v1/subscriptions/${id}`, subscription, { headers: authHeader() }),
-  getSubscription: (id: number) => axios.get(`${API_URL}api/v1/subscriptions/${id}`, { headers: authHeader() }),
-  getStudentRecentSubscription: (params: QueryParams) => axios.get(`${API_URL}api/v1/schools/subscriptions/student_recent_subscription?${queryStringFormatter(params)}`, { headers: authHeader() }),  
+  initializeTransaction: async (params: any) => axios.post(`${API_URL}api/v1/parents/subscriptions/initialize_transaction`, params, { headers: await authHeader()}),  // eslint-disable-line max-len 
+  getMomoToken: async () => axios.get(`${API_URL}api/v1/subscriptions/payments/student/keys/momo_api_key/momo_token`, {headers: await authHeader()}),
+  requestToPay: async (params: any) => axios.post(`${API_URL}api/v1/subscriptions/payments/student/keys/momo_api_key/momo_token/request_to_pay`, params, {headers: {...await authHeader(), token:sessionStorage.getItem('momo_token')}}),  // eslint-disable-line max-len  
+  getMomoApiKey: async () => axios.get(`${API_URL}api/v1/subscriptions/payments/student/keys/momo_api_key`, { headers: await authHeader() }),
+  getSubscriptions: async (params: QueryParams) => axios.get(`${API_URL}api/v1/subscriptions?${queryStringFormatter(params)}`, { headers: await authHeader() }),
+  addSubscription: async (subscription: Subscription) => axios.post(`${API_URL}api/v1/subscriptions`, subscription, { headers: await authHeader() }),
+  deleteSubscription: async (subscription: SubscriptionViewModel) => axios.delete(`${API_URL}api/v1/subscriptions/${subscription.id}`, { headers: await authHeader() }),
+  updateSubscription: async (subscription: Subscription, id: number) => axios.put(`${API_URL}api/v1/subscriptions/${id}`, subscription, { headers: await authHeader() }),
+  getSubscription: async (id: number) => axios.get(`${API_URL}api/v1/subscriptions/${id}`, { headers: await authHeader() }),
+  getStudentRecentSubscription: async (params: QueryParams) => axios.get(`${API_URL}api/v1/schools/subscriptions/student_recent_subscription?${queryStringFormatter(params)}`, { headers: await authHeader() }),  
 };
 export default SubscriptionService;
 

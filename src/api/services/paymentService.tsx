@@ -8,15 +8,20 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const PaymentService = {
-    addPayment: (payment: any) => axios.post(`${API_URL}api/v1/schools/fees/payments/create`, payment, { headers: authHeader() }),
-    getPayments: (params: QueryParams) => 
-    axios.get(`${API_URL}api/v1/schools/fees/payments/index?${queryStringFormatter(params)}`, { headers: authHeader() }),    
-    getPaymentSummary: (params: QueryParams) => 
-        axios.get(`${API_URL}api/v1/schools/fees/payments/payment_summary?${queryStringFormatter(params)}`, { headers: authHeader() }),    
+    addPayment: async (payment: any) => {
+        const headers = await authHeader();
+        return axios.post(`${API_URL}api/v1/schools/fees/payments/create`, payment, { headers });
+    },
+    getPayments: async (params: QueryParams) => {
+        const headers = await authHeader();
+        return axios.get(`${API_URL}api/v1/schools/fees/payments/index?${queryStringFormatter(params)}`, { headers });
+    },    
+    getPaymentSummary: async (params: QueryParams) => 
+        axios.get(`${API_URL}api/v1/schools/fees/payments/payment_summary?${queryStringFormatter(params)}`, { headers: await authHeader() }),    
         
-    deletePayment: (paymentId: number) => axios.delete(`${API_URL}api/v1/payments/${paymentId}`, { headers: authHeader() }),    
-    updatePayment: (payment: any, id:number) => axios.put(`${API_URL}api/v1/payments/${id}`, payment, { headers: authHeader() }),   
-    getPayment: (paymentId: number) => axios.get(`${API_URL}api/v1/payments/${paymentId}`, { headers: authHeader() }),
+    deletePayment: async (paymentId: number) => axios.delete(`${API_URL}api/v1/payments/${paymentId}`, { headers: await authHeader() }),    
+    updatePayment: async (payment: any, id:number) => axios.put(`${API_URL}api/v1/payments/${id}`, payment, { headers: await authHeader() }),   
+    getPayment: async (paymentId: number) => axios.get(`${API_URL}api/v1/payments/${paymentId}`, { headers: await authHeader() }),
   };
   
   export default PaymentService;

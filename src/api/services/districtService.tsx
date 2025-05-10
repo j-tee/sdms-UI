@@ -8,11 +8,26 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 const DistrictService = {
-  getDistricts: (params: any) => axios.get(`${API_URL}api/v1/regions/${params.region_id}/districts?${queryStringFormatter(params)}`, { headers: authHeader() }),
-  addDistrict: (district: any) => axios.post(`${API_URL}api/v1/regions/${district.region_id}/districts`, district, { headers: authHeader() }),
-  deleteDistrict: (district: any) => axios.delete(`${API_URL}api/v1/regions/${district.region_id}/districts/${district.id}`, { headers: authHeader() }),
-  updateDistrict: (district: any) => axios.put(`${API_URL}api/v1/regions/${district.region_id}/districts/${district.id}`, district, { headers: authHeader() }),
-  getDistrict: (district: any) => axios.get(`${API_URL}api/v1/regions/${district.region_id}/districts/${district.id}`, { headers: authHeader() }),
+  getDistricts: async (params: any) => {
+    const headers = await authHeader();
+    return axios.get(`${API_URL}api/v1/regions/${params.region_id}/districts?${queryStringFormatter(params)}`, { headers });
+  },
+  addDistrict: async (district: any) => {
+    const headers = await authHeader();
+    return axios.post(`${API_URL}api/v1/regions/${district.region_id}/districts`, district, { headers });
+  },
+  deleteDistrict: async (district: any) => {
+    const headers = await authHeader();
+    return axios.delete(`${API_URL}api/v1/regions/${district.region_id}/districts/${district.id}`, { headers });
+  },
+  updateDistrict: async (district: any) => {
+    const headers = await authHeader();
+    return axios.put(`${API_URL}api/v1/regions/${district.region_id}/districts/${district.id}`, district, { headers });
+  },
+  getDistrict: async (district: any) => {
+    const headers = await authHeader();
+    return axios.get(`${API_URL}api/v1/regions/${district.region_id}/districts/${district.id}`, { headers });
+  },
 };
 
 export default DistrictService;
