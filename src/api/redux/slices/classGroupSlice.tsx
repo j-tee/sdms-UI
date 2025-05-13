@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ClassGroup, ClassGroupParams, ClassGroupState } from '../../models/classGroup';
 import ClassGroupService from '../../services/classGroupService';
+import { ClassGroup, ClassGroupParams, ClassGroupState } from '@/src/models/classGroup';
 
 const initialState: ClassGroupState = {
   class_groups: [],

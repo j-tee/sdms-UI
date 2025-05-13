@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Parent, ParentParams, ParentState } from '../../models/parent';
 import ParentService from '../../services/parentService';
-import { QueryParams } from '../../models/queryParams';
+import { Parent, ParentParams, ParentState } from '@/src/models/parent';
+import { QueryParams } from '@/src/models/queryParams';
 
 const initialState: ParentState = {
   parents: [],

@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AcademicTerm, AcademicTermViewModel, AcademicYear, CalendarState } from '../../models/calendar';
 import CalendarService from '../../services/calendarService';
+import { AcademicTerm, AcademicTermViewModel, AcademicYear, CalendarState } from '@/src/models/calendar';
 
 const initialState: CalendarState = {
   academic_years: [],

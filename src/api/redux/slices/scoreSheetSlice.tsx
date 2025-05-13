@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ScoreSheet, ScoreSheetState } from '../../models/scoreSheet';
-import { QueryParams } from '../../models/queryParams';
 import ScoreSheetService from '../../services/scoreSheetService';
+import { ScoreSheet, ScoreSheetState } from '@/src/models/scoreSheet';
+import { QueryParams } from '@/src/models/queryParams';
 
 const initialState: ScoreSheetState = {
   isLoading: false,  

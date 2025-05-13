@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { StudentOptionalCourse, StudentOptionalCourseParams, StudentOptionalCourseState } from '../../models/optionalCourseRegistration';
 import StudentOptionalCourseService from '../../services/optionalCourseRegService';
+import { StudentOptionalCourse, StudentOptionalCourseParams, StudentOptionalCourseState } from '@/src/models/optionalCourseRegistration';
 
 const initialState: StudentOptionalCourseState = {
     student_optional_courses: [],

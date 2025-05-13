@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Program, ProgramParams, ProgramState } from '../../models/program';
 import ProgramService from '../../services/programService';
+import { Program, ProgramParams, ProgramState } from '@/src/models/program';
 
 
 const initialState: ProgramState = {

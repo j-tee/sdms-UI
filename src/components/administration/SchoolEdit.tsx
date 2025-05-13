@@ -6,10 +6,9 @@ import {
   TextInput,
   Button,
   Image,
-  StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Alert,
+  StyleSheet,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { launchImageLibrary } from "react-native-image-picker";
@@ -99,75 +98,109 @@ const SchoolEdit: React.FC<SchoolEditProps> = ({
 
   return (
     <Modal visible={isVisible} animationType="slide" onRequestClose={onClose}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Edit: {school.school_name}</Text>
+      <View style={styles.overlay}>
+        <View style={styles.modalContainer}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            keyboardShouldPersistTaps="handled"
+          >
+            <Text style={styles.title}>Edit: {school.school_name}</Text>
 
-        <View style={styles.imageContainer}>
-          <Text style={styles.label}>School Crest</Text>
-          {crestPreview ? (
-            <Image source={{ uri: crestPreview }} style={styles.image} />
-          ) : null}
-          <Button
-            title="Select Crest Image"
-            onPress={() => selectImage(setCrestImage, setCrestPreview)}
-          />
+            <View style={styles.imageContainer}>
+              <Text style={styles.label}>School Crest</Text>
+              {crestPreview ? (
+                <Image source={{ uri: crestPreview }} style={styles.image} />
+              ) : null}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => selectImage(setCrestImage, setCrestPreview)}
+              >
+                <Text style={styles.buttonText}>Select Crest Image</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.imageContainer}>
+              <Text style={styles.label}>Background Picture</Text>
+              {backgroundPreview ? (
+                <Image source={{ uri: backgroundPreview }} style={styles.image} />
+              ) : null}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  selectImage(setBackgroundImage, setBackgroundPreview)
+                }
+              >
+                <Text style={styles.buttonText}>Select Background Image</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>School Name</Text>
+              <TextInput
+                style={styles.input}
+                value={schoolName}
+                onChangeText={setSchoolName}
+                placeholder="Enter school name"
+              />
+            </View>
+
+            <View style={styles.buttonRow}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleSubmit}
+              >
+                <Text style={styles.buttonText}>Update</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton]}
+                onPress={onClose}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
-
-        <View style={styles.imageContainer}>
-          <Text style={styles.label}>Background Picture</Text>
-          {backgroundPreview ? (
-            <Image source={{ uri: backgroundPreview }} style={styles.image} />
-          ) : null}
-          <Button
-            title="Select Background Image"
-            onPress={() =>
-              selectImage(setBackgroundImage, setBackgroundPreview)
-            }
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>School Name</Text>
-          <TextInput
-            style={styles.input}
-            value={schoolName}
-            onChangeText={setSchoolName}
-            placeholder="Enter school name"
-          />
-        </View>
-
-        {/* Implement SchoolDropdowns component as needed */}
-
-        <View style={styles.buttonContainer}>
-          <Button title="Update" onPress={handleSubmit} />
-          <Button title="Cancel" onPress={onClose} color="red" />
-        </View>
-      </ScrollView>
+      </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  overlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.4)",
+  },
+  modalContainer: {
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 10,
     padding: 20,
-    backgroundColor: "#fff",
+    maxHeight: "90%",
+  },
+  scrollViewContent: {
+    flexGrow: 1,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
+    textAlign: "center",
   },
   imageContainer: {
     marginBottom: 20,
   },
   label: {
-    marginBottom: 10,
     fontSize: 16,
+    marginBottom: 10,
   },
   image: {
     width: 100,
     height: 100,
     marginBottom: 10,
+    borderRadius: 8,
+    resizeMode: "cover",
   },
   inputContainer: {
     marginBottom: 20,
@@ -178,8 +211,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-  buttonContainer: {
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 20,
+  },
+  button: {
+    flex: 1,
+    backgroundColor: "#007AFF",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginHorizontal: 5,
+  },
+  cancelButton: {
+    backgroundColor: "#FF3B30",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

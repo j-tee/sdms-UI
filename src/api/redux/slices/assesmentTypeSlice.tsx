@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AssessmentType, AssessmentTypeState } from '../../models/assessmentTypes';
 import AssessmentService from '../../services/assessmentService';
-import { QueryParams } from '../../models/queryParams';
+import { AssessmentType, AssessmentTypeState } from '@/src/models/assessmentTypes';
+import { QueryParams } from '@/src/models/queryParams';
+
 const initialState: AssessmentTypeState = {
   assessment_types: [],
   assessment_type: {

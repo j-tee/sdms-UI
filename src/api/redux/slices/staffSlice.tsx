@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Staff, StaffParams, StaffState } from '../../models/staff';
 import StaffService from '../../services/staffService';
+import { Staff, StaffParams, StaffState } from '@/src/models/staff';
 
 const initialState: StaffState = {
   staffs: [],

@@ -1,11 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { Tax } from '@/src/models/tax';
-import authHeader from '@/src/utilities/authHeader';
-import axios from 'axios';
-// import authHeader from '../utility/authHeader';
-// import { Tax } from '../models/tax';
+import { Tax } from "@/src/models/tax";
+import authHeader from "@/src/utilities/authHeader";
+import axios from "axios";
+import Constants from "expo-constants";
 
-const API_URL = process.env.REACT_APP_API_BASE_URL;
+const API_URL = Constants.expoConfig?.extra?.apiBaseUrl ?? "";
 
 const TaxService = {
   getTaxes: async () => {
@@ -30,4 +29,3 @@ const TaxService = {
   },
 };
 export default TaxService;
-

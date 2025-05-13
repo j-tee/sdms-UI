@@ -1,23 +1,40 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { Department, DepartmentParams } from '@/src/models/department';
-import authHeader from '@/src/utilities/authHeader';
-import queryStringFormatter from '@/src/utilities/queryStringFormatter';
-import axios from 'axios';
-// import authHeader from '../utility/authHeader';
-// import { Department, DepartmentParams } from '../models/department';
-// import queryStringFormatter from '../utility/queryStringFormatter';
+import { Department, DepartmentParams } from "@/src/models/department";
+import authHeader from "@/src/utilities/authHeader";
+import queryStringFormatter from "@/src/utilities/queryStringFormatter";
+import axios from "axios";
+import Constants from "expo-constants";
 
-const API_URL = process.env.REACT_APP_API_BASE_URL;
+const API_URL = Constants.expoConfig?.extra?.apiBaseUrl ?? "";
 
 const DepartmentService = {
-  getStudentDepartments: (params: DepartmentParams) => axios.get(`${API_URL}api/v1/parents/students/departments/student_departments?${queryStringFormatter(params)}`, { headers: authHeader() }), 
-  getDepartments: (params: DepartmentParams) => 
-  axios.get(`${API_URL}api/v1/departments?${queryStringFormatter(params)}`, { headers: authHeader() }),
-  addDepartment: (department: Department) => axios.post(`${API_URL}api/v1/departments`, department, { headers: authHeader() }),
-  deleteDepartment: (departmentId: number) => axios.delete(`${API_URL}api/v1/departments/${departmentId}`, { headers: authHeader() }),
-  updateDepartment: (department: Department, id:number) => axios.put(`${API_URL}api/v1/departments/${id}`, department, { headers: authHeader() }),
-  getDepartment: (departmentId: number) => axios.get(`${API_URL}api/v1/departments/${departmentId}`, { headers: authHeader() }),
+  getStudentDepartments: async (params: DepartmentParams) =>
+    axios.get(
+      `${API_URL}api/v1/parents/students/departments/student_departments?${queryStringFormatter(
+        params
+      )}`,
+      { headers: await authHeader() }
+    ),
+  getDepartments: async (params: DepartmentParams) =>
+    axios.get(`${API_URL}api/v1/departments?${queryStringFormatter(params)}`, {
+      headers: await authHeader(),
+    }),
+  addDepartment: async (department: Department) =>
+    axios.post(`${API_URL}api/v1/departments`, department, {
+      headers: await authHeader(),
+    }),
+  deleteDepartment: async (departmentId: number) =>
+    axios.delete(`${API_URL}api/v1/departments/${departmentId}`, {
+      headers: await authHeader(),
+    }),
+  updateDepartment: async (department: Department, id: number) =>
+    axios.put(`${API_URL}api/v1/departments/${id}`, department, {
+      headers: await authHeader(),
+    }),
+  getDepartment: async (departmentId: number) =>
+    axios.get(`${API_URL}api/v1/departments/${departmentId}`, {
+      headers: await authHeader(),
+    }),
 };
 
 export default DepartmentService;
-

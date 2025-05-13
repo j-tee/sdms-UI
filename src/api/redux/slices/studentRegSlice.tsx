@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Registration, StudentRegParams, StudentRegState, StudentRegistration } from '../../models/student';
 import StudentRegService from '../../services/studentRegService';
-import { QueryParams } from '../../models/queryParams';
+import { Registration, StudentRegState } from '@/src/models/student';
+import { QueryParams } from '@/src/models/queryParams';
 
 const initialState: StudentRegState = {
   admitted_but_not_registered_pagination: {

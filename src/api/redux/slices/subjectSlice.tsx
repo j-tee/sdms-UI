@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Subject, SubjectParams, SubjectState } from '../../models/subject';
 import SubjectService from '../../services/subjectService';
+import { Subject, SubjectParams, SubjectState } from '@/src/models/subject';
 
 const initialState: SubjectState = {
   subject_list: [],

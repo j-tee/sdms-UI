@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Tax, TaxState } from '../../models/tax';
 import TaxService from '../../services/taxService';
+import { Tax, TaxState } from '@/src/models/tax';
 
 const initialState: TaxState = {
   taxes: [],

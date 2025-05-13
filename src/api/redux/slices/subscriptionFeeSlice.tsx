@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { SubscriptionFee, SubscriptionFeeState } from '../../models/subscriptionFee';
 import SubscriptionFeeService from '../../services/subscriptionFeeService';
+import { SubscriptionFee, SubscriptionFeeState } from '@/src/models/subscriptionFee';
 
 const initialState: SubscriptionFeeState = {
     isLoading: false,

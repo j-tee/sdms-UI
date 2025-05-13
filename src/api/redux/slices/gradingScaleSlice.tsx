@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GradingScaleState } from "../../models/gradingScale";
 import GradingScaleService from "../../services/gradingScaleService";
+import { GradingScaleState } from "@/src/models/gradingScale";
 
 const initialState: GradingScaleState = {
   gradingScales: [],

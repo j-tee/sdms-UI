@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Attendance, AttendanceState } from '../../models/attendance';
 import AttendanceService from '../../services/attendanceService';
-import { QueryParams } from '../../models/queryParams';
+import { Attendance, AttendanceState } from '@/src/models/attendance';
+import { QueryParams } from '@/src/models/queryParams';
 
 const initialState: AttendanceState = {
   isLoading: false,

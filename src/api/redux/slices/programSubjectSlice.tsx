@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import ProgramSubjectService from '../../services/ProgramSubjectService';
-import { ProgramSubject, ProgramSubjectParams, ProgramSubjectState } from '../../models/subject';
+import { ProgramSubject, ProgramSubjectParams, ProgramSubjectState } from '@/src/models/subject';
 
 const initialState: ProgramSubjectState = {
   course_options: [],

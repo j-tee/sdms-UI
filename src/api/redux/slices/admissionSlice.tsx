@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Admission, AdmissionParams, AdmissionState } from '../../models/admission';
 import AdmissionService from '../../services/admissionService';
+import { Admission, AdmissionParams, AdmissionState } from '@/src/models/admission';
 
 const initialState: AdmissionState = {
   admissions: [],

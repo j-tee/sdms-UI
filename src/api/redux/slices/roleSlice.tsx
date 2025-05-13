@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RoleState } from "../../models/role";
 import RoleService from "../../services/roleService";
+import { RoleState } from '@/src/models/role';
 
 const initialState: RoleState = {
   roles: [],

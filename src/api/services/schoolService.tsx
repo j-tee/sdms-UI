@@ -3,10 +3,6 @@ import { SchoolParams } from "@/src/models/school";
 import authHeader from "@/src/utilities/authHeader";
 import queryStringFormatter from "@/src/utilities/queryStringFormatter";
 import axios from "axios";
-// import authHeader from "../utility/authHeader";
-// import { SchoolParams } from "../models/school";
-// import { Branch, BranchParams } from '../models/branch';
-// import queryStringFormatter from "../utility/queryStringFormatter";
 
 import Constants from "expo-constants";
 

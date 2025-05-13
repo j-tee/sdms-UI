@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Lesson, LessonParams, LessonState } from '../../models/Lesson';
 import LessonService from '../../services/lessonService';
+import { Lesson, LessonParams, LessonState } from '@/src/models/Lesson';
 
 const initialState: LessonState = {
     lessons: [],

@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import DistrictService from '../../services/districtService';
-import { District, DistrictState } from '../../models/district';
-import { Region } from '../../models/region';
+import { District, DistrictState } from '@/src/models/district';
 
 
 const initialState: DistrictState = {

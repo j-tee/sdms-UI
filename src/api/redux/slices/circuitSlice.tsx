@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import CircuitService from '../../services/circuitService';
-import { Circuit, CircuitState } from '../../models/circuit';
+import { CircuitState } from '@/src/models/circuit';
 
 const initialState: CircuitState = {
   circuits: [],

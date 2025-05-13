@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Region, RegionState } from '../../models/region';
 import RegionService from '../../services/regionService';
+import { Region, RegionState } from '@/src/models/region';
 
 
 const initialState:RegionState = {

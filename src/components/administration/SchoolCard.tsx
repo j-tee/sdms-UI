@@ -29,7 +29,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ school, params }) => {
   const [isSchoolEditModalOpen, setSchoolEditModalOpen] = useState(false);
   const [isAddBranchModalOpen, setAddBranchModalOpen] = useState(false);
   const [roles, setRoles] = useState<string[]>([]);
-  const {user} = useSelector((state: RootState) => state.auth)
+  const { user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     UserSession.getRoles().then(setRoles);
@@ -50,7 +50,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ school, params }) => {
   );
 
   const canEditOrDelete =
-    validUser && roles.some(role => privilegedRoles.includes(role));
+    validUser && roles.some((role) => privilegedRoles.includes(role));
 
   const seeBranches = () => navigation.push("Branches", { school });
   const handleDelete = () => navigation.push("DeleteSchool", { school });
@@ -84,7 +84,10 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ school, params }) => {
             <Text style={styles.buttonText}>Branches</Text>
           </TouchableOpacity>
           {validUser && roles.includes("admin") && (
-            <TouchableOpacity onPress={openAddBranchModal} style={styles.button}>
+            <TouchableOpacity
+              onPress={openAddBranchModal}
+              style={styles.button}
+            >
               <Text style={styles.buttonText}>Add New Branch</Text>
             </TouchableOpacity>
           )}
@@ -104,24 +107,19 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ school, params }) => {
           </View>
         )}
 
-        <Modal visible={isSchoolEditModalOpen} animationType="slide">
-          <SchoolEdit
-            params={params}
-            school={school}
-            setSchoolEditModalOpen={setSchoolEditModalOpen}
-            isVisible={isSchoolEditModalOpen}
-            onClose={() => setSchoolEditModalOpen(false)}
-          />
-        </Modal>
-
-        <Modal visible={isAddBranchModalOpen} animationType="slide">
-          <AddBranch
-            schoolId={school.id}
-            setAddBranchModalOpen={setAddBranchModalOpen}
-            isVisible={isAddBranchModalOpen}
-            onClose={() => setAddBranchModalOpen(false)}
-          />
-        </Modal>
+        <SchoolEdit
+          params={params}
+          school={school}
+          setSchoolEditModalOpen={setSchoolEditModalOpen}
+          isVisible={isSchoolEditModalOpen}
+          onClose={() => setSchoolEditModalOpen(false)}
+        />
+        <AddBranch
+          schoolId={school.id}
+          setAddBranchModalOpen={setAddBranchModalOpen}
+          isVisible={isAddBranchModalOpen}
+          onClose={() => setAddBranchModalOpen(false)}
+        />        
       </View>
     </View>
   );
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   image: {
-    width: "30%",
+    width: 120,
     height: 120,
     borderRadius: 8,
     marginRight: 10,

@@ -9,10 +9,6 @@ import { UserModel } from "@/src/models/userModel";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AuthService from "../../services/authService";
 import RoleService from "../../services/roleService";
-// import authService from '../../services/authService';
-// import { RegisterUserModel, ResetPasswdUserData, UserRole, loginUserInfo, RoleModel } from '../../models/authModel';
-// import { UserModel } from '../../models/userModel';
-// import RoleService from '../../services/roleService';
 
 const initialState = {
   status: "",

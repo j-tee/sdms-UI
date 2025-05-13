@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   View,
@@ -7,7 +7,8 @@ import {
   StyleSheet,
   ScrollView,
   TextInput,
-  Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/src/api/redux/store";
@@ -30,7 +31,6 @@ const AddBranch: React.FC<AddBranchProps> = ({
   schoolId,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-
   const [formData, setFormData] = useState<any>({
     branch_name: "",
     postal_address: "",
@@ -87,9 +87,15 @@ const AddBranch: React.FC<AddBranchProps> = ({
       transparent={true}
       onRequestClose={onClose}
     >
-      <View style={styles.overlay}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.overlay}
+      >
         <View style={styles.modalContainer}>
-          <ScrollView>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            keyboardShouldPersistTaps="handled"
+          >
             <Text style={styles.title}>Add New Branch</Text>
             <LocationDropDown onLocationChange={handleInputChange} />
             <BranchForm
@@ -109,29 +115,32 @@ const AddBranch: React.FC<AddBranchProps> = ({
             </View>
           </ScrollView>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
-
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.4)",
   },
   modalContainer: {
     width: "90%",
-    maxHeight: "80%",
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     borderRadius: 10,
     padding: 20,
+    maxHeight: "90%",
+  },
+  scrollViewContent: {
+    flexGrow: 1,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
+    textAlign: "center",
   },
   buttonRow: {
     flexDirection: "row",
@@ -140,20 +149,20 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    padding: 12,
-    backgroundColor: "#007AFF",
-    borderRadius: 8,
-    alignItems: "center",
     marginHorizontal: 5,
+    backgroundColor: "#007AFF",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
   },
   cancelButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#FF3B30",
   },
   buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
+    color: "white",
+    fontWeight: "bold",
   },
 });
+
 
 export default AddBranch;

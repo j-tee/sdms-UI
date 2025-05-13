@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import BillsFeesService from '../../services/billsFeesService';
-import { BillsFees, BillsFeesState } from '../../models/billsFees';
+import { BillsFees, BillsFeesState } from '@/src/models/billsFees';
 
 const initialState:BillsFeesState = {
     fees: [],

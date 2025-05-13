@@ -1,5 +1,4 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { StudentOptionalCourse } from "../../models/optionalCourseRegistration";
 import StudentCourseRegService from "../../services/studentCourseRegService";
 
 export const registerOptionalCourses = createAsyncThunk(

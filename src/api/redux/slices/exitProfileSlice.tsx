@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExitProfile, ExitProfileState } from "../../models/exitProfile";
-import { PaginationParams } from "../../models/pagination";
 import ExitProfileService from "../../services/exitProfileService";
+import { ExitProfile, ExitProfileState } from '@/src/models/exitProfile';
+import { PaginationParams } from '@/src/models/pagination';
 
 
 const initialState: ExitProfileState = {

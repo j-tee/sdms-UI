@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Subscription, SubscriptionState } from '../../models/subscription';
 import SubscriptionService from '../../services/subscriptionService';
-import { QueryParams } from '../../models/queryParams';
+import { Subscription, SubscriptionState } from '@/src/models/subscription';
+import { QueryParams } from '@/src/models/queryParams';
 
 const initialState: SubscriptionState = {
   subscriptions: [],

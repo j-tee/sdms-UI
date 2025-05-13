@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Department, DepartmentParams, DepartmentState } from '../../models/department';
 import DepartmentService from '../../services/departmentService';
+import { Department, DepartmentParams, DepartmentState } from '@/src/models/department';
 
 const initialState: DepartmentState = {
   departments: [],

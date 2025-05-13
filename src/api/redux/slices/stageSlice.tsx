@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Stage, StageParams, StageState, StageViewModel } from '../../models/stage';
 import StageService from '../../services/stageService';
+import { Stage, StageParams, StageState, StageViewModel } from '@/src/models/stage';
 
 const initialState: StageState = {
   stages: [],

@@ -1,7 +1,7 @@
 
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import PaymentService from '../../services/paymentService';
-import { PaymentState } from '../../models/payment';
+import { PaymentState } from '@/src/models/payment';
 
 const initialState: PaymentState = {
     payments: [],
